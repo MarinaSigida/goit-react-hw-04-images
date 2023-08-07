@@ -6,9 +6,9 @@ const SpinnerLoader = () => (
     <Circles
     height="80"
     width="80"
-    color='black'
+    color='white'
     ariaLabel='circles-loading'
-    wrapperStyle={{}}
+    wrapperStyle={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
     visible={true}
   />
 )

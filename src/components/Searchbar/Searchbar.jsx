@@ -1,40 +1,37 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Notiflix from 'notiflix';
 import styles from './Searchbar.module.css';
 
-class Searchbar extends Component {
-  state = {
-    name: '',
- };
+const Searchbar = ({ onSubmitHandler }) => {
+  const [name, setName] = useState('');
 
-  handleChange = event => {
+ const handleChange = event => {
     const { value } = event.currentTarget;
-    this.setState({ name: value });
+    setName(value);
   };
 
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
 
-    if (this.state.name.trim() === '') {
+    if (name.trim() === '') {
       Notiflix.Notify.failure(
         'search string is empty!'
       );
       return;
     }
 
-    this.props.onSubmitHandler(this.state);
+    onSubmitHandler({name});
 
-    this.reset();
+    reset();
   };
 
-  reset() {
-    this.setState({ name: '' });
+  const reset = () => {
+    setName('');
   }
 
-  render() {
     return (
       <header className={styles.Searchbar}>
-        <form className={styles.SearchForm} onSubmit={this.handleSubmit}>
+        <form className={styles.SearchForm} onSubmit={handleSubmit}>
         <button type="submit" className={styles.SearchFormButton}>
             <span className={styles.SearchFormButtonLabel}>
               <svg
@@ -52,15 +49,16 @@ class Searchbar extends Component {
           <input
             className={styles.SearchFormInput}
             type="text"
-            onChange={this.handleChange}
+            onChange={handleChange}
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
+            value={name}
           />
         </form>
       </header>
     );
   }
-}
+
 
 export default Searchbar;
